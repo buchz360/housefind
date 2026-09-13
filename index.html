@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HouseFind | Rent • Buy • Belong</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <a href="#" class="logo">
+      <span class="logo-house">⌂</span>
+      <span>House<span>Find</span></span>
+    </a>
+
+    <button id="menuBtn" class="menu-btn">☰</button>
+
+    <nav id="navMenu">
+      <a href="#rent">Rent</a>
+      <a href="#buy">Buy</a>
+      <a href="#land">Land</a>
+      <a href="#commercial">Commercial</a>
+      <a href="#list">List Property</a>
+      <a href="#" data-toast="Sign in coming soon">Sign In</a>
+      <a href="#" class="nav-cta" data-toast="Account creation coming soon">
+        Get Started
+      </a>
+    </nav>
+  </div>
+</header>
+
+
+<main>
+
+<section class="hero">
+  <div class="container hero-content">
+    <div class="hero-text">
+      <p class="eyebrow">PORT HARCOURT PROPERTY MARKET</p>
+
+      <h1>Find Your<br>Next Home.</h1>
+
+      <p>
+        Discover verified homes and properties for rent and sale in
+        Port Harcourt.
+      </p>
+
+      <form id="searchForm" class="search-box">
+        <input id="location" type="text" placeholder="Location">
+
+        <select id="propertyType">
+          <option value="">Property Type</option>
+          <option value="rent">Rent</option>
+          <option value="buy">Buy</option>
+          <option value="land">Land</option>
+          <option value="commercial">Commercial</option>
+        </select>
+
+        <select id="price">
+          <option value="">Price Range</option>
+          <option value="1">Under ₦2m</option>
+          <option value="2">₦2m – ₦5m</option>
+          <option value="3">₦5m – ₦20m</option>
+          <option value="4">₦20m+</option>
+        </select>
+
+        <button type="submit">Search</button>
+      </form>
+
+      <div class="trust">
+        <span>✓ Verified Listings</span>
+        <span>✓ Trusted Owners</span>
+        <span>✓ Real Properties</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="rent">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">EXPLORE</p>
+        <h2>Browse by Need</h2>
+      </div>
+      <p>Find a property that fits your next move.</p>
+    </div>
+
+    <div class="need-grid">
+      <a href="#properties" class="need-card">
+        <span>01</span>
+        <h3>Rent a Home</h3>
+        <p>Find apartments, houses and homes for rent.</p>
+      </a>
+
+      <a href="#properties" class="need-card">
+        <span>02</span>
+        <h3>Buy a Property</h3>
+        <p>Discover homes and properties available for purchase.</p>
+      </a>
+
+      <a href="#land" class="need-card">
+        <span>03</span>
+        <h3>Buy Land</h3>
+        <p>Explore land opportunities across Port Harcourt.</p>
+      </a>
+
+      <a href="#commercial" class="need-card">
+        <span>04</span>
+        <h3>Commercial Property</h3>
+        <p>Find spaces for business, offices and investment.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<section class="section light" id="properties">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">FEATURED</p>
+        <h2>Properties Worth Seeing</h2>
+      </div>
+      <a href="#" data-toast="More properties coming soon">View All →</a>
+    </div>
+
+    <div id="propertyGrid" class="property-grid"></div>
+  </div>
+</section>
+
+
+<section class="section" id="buy">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">LOCATION</p>
+        <h2>Explore Port Harcourt</h2>
+      </div>
+      <p>Start your search in the areas that matter.</p>
+    </div>
+
+    <div class="area-grid">
+      <div>GRA</div>
+      <div>Rumuola</div>
+      <div>Woji</div>
+      <div>Peter Odili</div>
+      <div>Eliozu</div>
+      <div>Trans Amadi</div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section light">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">WHY HOUSEFIND</p>
+        <h2>Property Search Made Simpler.</h2>
+      </div>
+    </div>
+
+    <div class="why-grid">
+      <div>
+        <b>01</b>
+        <h3>Verified Listings</h3>
+        <p>Find properties with greater confidence.</p>
+      </div>
+
+      <div>
+        <b>02</b>
+        <h3>Trusted Owners & Agents</h3>
+        <p>Connect with property providers on the platform.</p>
+      </div>
+
+      <div>
+        <b>03</b>
+        <h3>Easy Property Search</h3>
+        <p>Search by location, property type and price.</p>
+      </div>
+
+      <div>
+        <b>04</b>
+        <h3>Safer Transactions</h3>
+        <p>Built to make property discovery more transparent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="list-section" id="list">
+  <div class="container list-box">
+    <div>
+      <p class="eyebrow">PROPERTY OWNERS & AGENTS</p>
+      <h2>Have a Property to List?</h2>
+      <p>
+        Put your property in front of people actively looking
+        for their next place.
+      </p>
+    </div>
+
+    <a href="#" class="btn" data-toast="Property listing will be available soon">
+      List Your Property
+    </a>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">HOW IT WORKS</p>
+        <h2>From Search to Your Next Move.</h2>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div>
+        <span>01</span>
+        <h3>Search</h3>
+        <p>Find properties based on your needs.</p>
+      </div>
+
+      <div>
+        <span>02</span>
+        <h3>Compare</h3>
+        <p>Review properties, locations and prices.</p>
+      </div>
+
+      <div>
+        <span>03</span>
+        <h3>Connect</h3>
+        <p>Connect with the owner or agent.</p>
+      </div>
+
+      <div>
+        <span>04</span>
+        <h3>Move Forward</h3>
+        <p>Take the next step with confidence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="final-cta">
+  <div class="container">
+    <p class="eyebrow">HOUSEFIND</p>
+    <h2>Your Next Place Could Be Closer Than You Think.</h2>
+    <a href="#properties" class="btn orange">Start Searching</a>
+  </div>
+</section>
+
+</main>
+
+
+<footer class="footer" id="commercial">
+  <div class="container footer-grid">
+
+    <div>
+      <a href="#" class="logo">
+        <span class="logo-house">⌂</span>
+        <span>House<span>Find</span></span>
+      </a>
+      <p>RENT • BUY • BELONG</p>
+      <small>© 2026 HouseFind. All rights reserved.</small>
+    </div>
+
+    <div>
+      <h4>Explore</h4>
+      <a href="#rent">Rent</a>
+      <a href="#buy">Buy</a>
+      <a href="#land">Land</a>
+      <a href="#commercial">Commercial</a>
+    </div>
+
+    <div>
+      <h4>HouseFind</h4>
+      <a href="#list">List Property</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+
+  </div>
+</footer>
+
+
+<div id="toast" class="toast"></div>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
