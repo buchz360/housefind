@@ -839,3 +839,287 @@ a{
   }
 
   }
+/* =========================================
+   PROPERTY RESULTS PAGE
+   ========================================= */
+
+
+/* RESULTS HERO */
+
+.results-hero{
+  background:var(--navy);
+  color:#fff;
+  padding:80px 0 70px;
+}
+
+.results-hero h1{
+  font-size:clamp(42px,6vw,68px);
+  line-height:1;
+  letter-spacing:-1.5px;
+  margin-bottom:20px;
+}
+
+.results-intro{
+  max-width:600px;
+  color:#dbe5ef;
+  font-size:18px;
+  margin-bottom:35px;
+}
+
+
+/* RESULTS SEARCH */
+
+.results-search{
+  display:grid;
+  grid-template-columns:1.3fr 1fr 1fr auto;
+  gap:0;
+  max-width:1000px;
+  background:#fff;
+  padding:7px;
+  border-radius:8px;
+  box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+.results-search input,
+.results-search select{
+  width:100%;
+  min-width:0;
+  border:0;
+  outline:0;
+  background:#fff;
+  color:var(--dark);
+  padding:16px;
+  font-size:14px;
+}
+
+.results-search input::placeholder{
+  color:#7b8795;
+}
+
+.results-search button{
+  border:0;
+  background:var(--orange);
+  color:#fff;
+  font-weight:700;
+  padding:0 28px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.results-search button:hover{
+  background:#e96e00;
+}
+
+
+/* RESULTS SECTION */
+
+.results-section{
+  background:var(--white);
+}
+
+.results-header{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:25px;
+  margin-bottom:35px;
+}
+
+.results-header h2{
+  color:var(--navy);
+  font-size:clamp(30px,4vw,44px);
+  line-height:1.1;
+}
+
+.results-header select{
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--dark);
+  padding:12px 15px;
+  border-radius:5px;
+  font-size:14px;
+  outline:0;
+}
+
+
+/* RESULTS GRID */
+
+.results-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+
+/* MARKETPLACE EMPTY STATE */
+
+.marketplace-empty{
+  grid-column:1/-1;
+  min-height:360px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:60px 25px;
+  background:var(--sand);
+  border:1px dashed #CBD3DC;
+}
+
+.marketplace-empty .empty-icon{
+  width:65px;
+  height:65px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:22px;
+  border-radius:50%;
+  background:#fff;
+  color:var(--navy);
+  font-size:32px;
+}
+
+.marketplace-empty h3{
+  color:var(--navy);
+  font-size:25px;
+  margin-bottom:12px;
+}
+
+.marketplace-empty p{
+  max-width:560px;
+  color:var(--slate);
+  font-size:15px;
+  margin-bottom:28px;
+}
+
+.marketplace-empty .btn{
+  background:var(--navy);
+  color:#fff;
+}
+
+.marketplace-empty .btn:hover{
+  background:var(--orange);
+}
+
+
+/* PROPERTY RESULT CARD
+   Reserved for real listings later */
+
+.result-card{
+  background:#fff;
+  border:1px solid var(--border);
+  overflow:hidden;
+  transition:.25s;
+}
+
+.result-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+
+.result-card-image{
+  height:220px;
+  background:var(--sand);
+  position:relative;
+}
+
+.result-card-body{
+  padding:20px;
+}
+
+.result-card-price{
+  color:var(--navy);
+  font-size:19px;
+  font-weight:800;
+}
+
+.result-card-title{
+  color:var(--dark);
+  font-size:17px;
+  margin:7px 0;
+}
+
+.result-card-location{
+  color:var(--slate);
+  font-size:13px;
+}
+
+.result-card-meta{
+  display:flex;
+  gap:15px;
+  margin-top:15px;
+  color:var(--slate);
+  font-size:12px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:750px){
+
+  .results-hero{
+    padding:65px 0 55px;
+  }
+
+  .results-hero h1{
+    font-size:48px;
+  }
+
+  .results-intro{
+    font-size:16px;
+  }
+
+  .results-search{
+    grid-template-columns:1fr;
+    padding:10px;
+  }
+
+  .results-search input,
+  .results-search select{
+    border-bottom:1px solid var(--border);
+    min-height:52px;
+  }
+
+  .results-search button{
+    min-height:50px;
+    margin-top:5px;
+  }
+
+  .results-header{
+    display:block;
+  }
+
+  .results-header select{
+    margin-top:20px;
+    width:100%;
+  }
+
+  .results-grid{
+    grid-template-columns:1fr;
+  }
+
+  .marketplace-empty{
+    min-height:320px;
+    padding:45px 20px;
+  }
+
+  .marketplace-empty h3{
+    font-size:21px;
+  }
+
+}
+
+
+/* SMALL PHONES */
+
+@media(max-width:420px){
+
+  .results-hero h1{
+    font-size:42px;
+  }
+
+  .results-intro{
+    font-size:15px;
+  }
+
+}
