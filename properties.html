@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Properties | HouseFind</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+  <div class="container nav">
+
+    <a href="index.html" class="logo">
+
+      <img
+        src="assets/housefind-logo.png"
+        alt="HouseFind"
+      >
+
+    </a>
+
+
+    <button
+      id="menuBtn"
+      class="menu-btn"
+      aria-label="Open menu"
+    >
+      ☰
+    </button>
+
+
+    <nav id="navMenu">
+
+      <a href="properties.html?type=rent">
+        Rent
+      </a>
+
+      <a href="properties.html?type=buy">
+        Buy
+      </a>
+
+      <a href="properties.html?type=land">
+        Land
+      </a>
+
+      <a href="properties.html?type=commercial">
+        Commercial
+      </a>
+
+      <a href="index.html#list">
+        List Property
+      </a>
+
+      <a
+        href="#"
+        data-toast="Sign in coming soon"
+      >
+        Sign In
+      </a>
+
+      <a
+        href="#"
+        class="nav-cta"
+        data-toast="Account creation coming soon"
+      >
+        Get Started
+      </a>
+
+    </nav>
+
+  </div>
+
+</header>
+
+
+
+<!-- PAGE -->
+
+<main>
+
+
+<section class="results-hero">
+
+  <div class="container">
+
+    <p class="eyebrow">
+      HOUSEFIND MARKETPLACE
+    </p>
+
+    <h1>
+      Find a Property.
+    </h1>
+
+    <p class="results-intro">
+      Search homes, land and commercial properties
+      available across Port Harcourt.
+    </p>
+
+
+    <!-- SEARCH -->
+
+    <form
+      id="propertySearchForm"
+      class="results-search"
+    >
+
+      <input
+        id="searchLocation"
+        type="text"
+        placeholder="Location"
+      >
+
+
+      <select id="searchType">
+
+        <option value="">
+          Property Type
+        </option>
+
+        <option value="rent">
+          Rent
+        </option>
+
+        <option value="buy">
+          Buy
+        </option>
+
+        <option value="land">
+          Land
+        </option>
+
+        <option value="commercial">
+          Commercial
+        </option>
+
+      </select>
+
+
+      <select id="searchPrice">
+
+        <option value="">
+          Price Range
+        </option>
+
+        <option value="1">
+          Under ₦2m
+        </option>
+
+        <option value="2">
+          ₦2m – ₦5m
+        </option>
+
+        <option value="3">
+          ₦5m – ₦20m
+        </option>
+
+        <option value="4">
+          ₦20m+
+        </option>
+
+      </select>
+
+
+      <button type="submit">
+        Search
+      </button>
+
+    </form>
+
+  </div>
+
+</section>
+
+
+
+<!-- RESULTS -->
+
+<section class="section results-section">
+
+  <div class="container">
+
+
+    <div class="results-header">
+
+      <div>
+
+        <p class="eyebrow">
+          PROPERTY RESULTS
+        </p>
+
+        <h2 id="resultsTitle">
+          Properties
+        </h2>
+
+      </div>
+
+
+      <select id="sortProperties">
+
+        <option value="">
+          Sort by
+        </option>
+
+        <option value="newest">
+          Newest
+        </option>
+
+        <option value="low">
+          Price: Low to High
+        </option>
+
+        <option value="high">
+          Price: High to Low
+        </option>
+
+      </select>
+
+    </div>
+
+
+
+    <!-- EMPTY STATE -->
+
+    <div
+      id="resultsGrid"
+      class="results-grid"
+    >
+
+      <div class="marketplace-empty">
+
+        <div class="empty-icon">
+          ⌂
+        </div>
+
+        <h3>
+          We're Building the Marketplace
+        </h3>
+
+        <p>
+          Verified properties will appear here as
+          HouseFind listings go live across Port Harcourt.
+        </p>
+
+        <a
+          href="index.html#list"
+          class="btn"
+        >
+          List a Property
+        </a>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- TRUST -->
+
+<section class="section light">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <div>
+
+        <p class="eyebrow">
+          HOUSEFIND
+        </p>
+
+        <h2>
+          Search With Confidence.
+        </h2>
+
+      </div>
+
+      <p>
+        HouseFind is being built around clearer
+        property information and a better discovery
+        experience.
+      </p>
+
+    </div>
+
+
+    <div class="why-grid">
+
+      <div>
+
+        <b>01</b>
+
+        <h3>
+          Verified Listings
+        </h3>
+
+        <p>
+          Properties will go through a verification
+          process before publication.
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <b>02</b>
+
+        <h3>
+          Clear Property Information
+        </h3>
+
+        <p>
+          Compare location, property type, price
+          and other important details.
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <b>03</b>
+
+        <h3>
+          Local Discovery
+        </h3>
+
+        <p>
+          Find properties in the areas of Port Harcourt
+          that matter to you.
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <b>04</b>
+
+        <h3>
+          Better Connections
+        </h3>
+
+        <p>
+          Connect with property owners and agents
+          when you're ready to take the next step.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- CTA -->
+
+<section class="final-cta">
+
+  <div class="container">
+
+    <p class="eyebrow">
+      PROPERTY OWNERS & AGENTS
+    </p>
+
+    <h2>
+      Have a Property to List?
+    </h2>
+
+    <a
+      href="index.html#list"
+      class="btn orange"
+    >
+      List Your Property
+    </a>
+
+  </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+  <div class="container footer-grid">
+
+
+    <div>
+
+      <a
+        href="index.html"
+        class="logo footer-logo"
+      >
+
+        <img
+          src="assets/housefind-logo-white.png"
+          alt="HouseFind"
+        >
+
+      </a>
+
+      <small>
+        © 2026 HouseFind. All rights reserved.
+      </small>
+
+    </div>
+
+
+    <div>
+
+      <h4>
+        Explore
+      </h4>
+
+      <a href="properties.html?type=rent">
+        Rent
+      </a>
+
+      <a href="properties.html?type=buy">
+        Buy
+      </a>
+
+      <a href="properties.html?type=land">
+        Land
+      </a>
+
+      <a href="properties.html?type=commercial">
+        Commercial
+      </a>
+
+    </div>
+
+
+    <div>
+
+      <h4>
+        HouseFind
+      </h4>
+
+      <a href="index.html#list">
+        List Property
+      </a>
+
+      <a href="#">
+        About
+      </a>
+
+      <a href="#">
+        Contact
+      </a>
+
+    </div>
+
+
+  </div>
+
+</footer>
+
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<script src="js/properties.js"></script>
+
+
+</body>
+
+</html>
