@@ -1,62 +1,89 @@
+const grid = document.getElementById("propertyGrid");
+const menuBtn = document.getElementById("menuBtn");
+const navMenu = document.getElementById("navMenu");
+const toast = document.getElementById("toast");
+
+
 /* EMPTY PROPERTY STATE */
 
-.empty-properties{
-  grid-column:1/-1;
-  min-height:300px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:50px 25px;
-  background:#fff;
-  border:1px dashed #CBD3DC;
-}
+grid.innerHTML = `
+  <div class="empty-properties">
+    <div class="empty-icon">⌂</div>
 
-.empty-icon{
-  width:58px;
-  height:58px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:20px;
-  border-radius:50%;
-  background:var(--sand);
-  color:var(--navy);
-  font-size:30px;
-}
+    <h3>Properties Are Coming Soon</h3>
 
-.empty-properties h3{
-  color:var(--navy);
-  font-size:24px;
-  margin-bottom:10px;
-}
+    <p>
+      We're preparing verified properties across Port Harcourt.
+      Check back soon or be among the first to list a property.
+    </p>
 
-.empty-properties p{
-  max-width:500px;
-  color:var(--slate);
-  font-size:14px;
-  margin-bottom:25px;
-}
+    <a href="#list" class="btn">
+      List Your Property
+    </a>
+  </div>
+`;
 
-.empty-properties .btn{
-  background:var(--navy);
-  color:#fff;
-}
 
-.empty-properties .btn:hover{
-  background:var(--orange);
-}
+/* TOAST */
 
-@media(max-width:750px){
+function showToast(message) {
 
-  .empty-properties{
-    min-height:280px;
-    padding:40px 20px;
-  }
+  toast.textContent = message;
 
-  .empty-properties h3{
-    font-size:21px;
-  }
+  toast.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
 
 }
+
+
+/* MOBILE MENU */
+
+menuBtn.addEventListener("click", () => {
+
+  navMenu.classList.toggle("open");
+
+});
+
+
+/* CLOSE MOBILE MENU */
+
+document.querySelectorAll("#navMenu a").forEach(link => {
+
+  link.addEventListener("click", () => {
+    navMenu.classList.remove("open");
+  });
+
+});
+
+
+/* BUTTON NOTIFICATIONS */
+
+document.querySelectorAll("[data-toast]").forEach(button => {
+
+  button.addEventListener("click", event => {
+
+    event.preventDefault();
+
+    showToast(button.dataset.toast);
+
+  });
+
+});
+
+
+/* SEARCH */
+
+document.getElementById("searchForm").addEventListener("submit", event => {
+
+  event.preventDefault();
+
+  showToast(
+    "Property search will be available when listings go live."
+  );
+
+});
