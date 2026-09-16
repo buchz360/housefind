@@ -8,6 +8,9 @@ const searchType = document.getElementById("searchType");
 const searchPrice = document.getElementById("searchPrice");
 const sortProperties = document.getElementById("sortProperties");
 const resultsTitle = document.getElementById("resultsTitle");
+const resultsGrid = document.getElementById("resultsGrid");
+
+let allProperties = [];
 
 
 /* =========================================
@@ -17,15 +20,12 @@ const resultsTitle = document.getElementById("resultsTitle");
 function showToast(message){
 
   toast.textContent = message;
-
   toast.classList.add("show");
 
   clearTimeout(window.toastTimer);
 
   window.toastTimer = setTimeout(() => {
-
     toast.classList.remove("show");
-
   }, 2500);
 
 }
@@ -36,35 +36,47 @@ function showToast(message){
    ========================================= */
 
 menuBtn.addEventListener("click", () => {
-
   navMenu.classList.toggle("open");
-
 });
 
-
-/* CLOSE MENU AFTER LINK CLICK */
 
 document.querySelectorAll("#navMenu a").forEach(link => {
 
   link.addEventListener("click", () => {
-
     navMenu.classList.remove("open");
-
   });
 
 });
 
 
 /* =========================================
+   RESULTS TITLE
+   ========================================= */
+
+function updateResultsTitle(type){
+
+  const titles = {
+    rent: "Homes for Rent",
+    buy: "Properties for Sale",
+    land: "Land for Sale",
+    commercial: "Commercial Properties"
+  };
+
+  resultsTitle.textContent =
+    titles[type] || "Properties";
+
+}
+
+
+/* =========================================
    URL PROPERTY TYPE
    ========================================= */
 
-const urlParams = new URLSearchParams(
-  window.location.search
-);
+const urlParams =
+  new URLSearchParams(window.location.search);
 
-const urlType = urlParams.get("type");
-
+const urlType =
+  urlParams.get("type");
 
 if(urlType){
 
@@ -76,25 +88,368 @@ if(urlType){
 
 
 /* =========================================
-   RESULTS TITLE
+   FORMAT PROPERTY TYPE
    ========================================= */
 
-function updateResultsTitle(type){
+function formatPropertyType(type){
 
-  const titles = {
+  if(!type){
+    return "";
+  }
 
-    rent: "Homes for Rent",
+  return type
+    .replaceAll("_", " ")
+    .replace(/\b\w/g, letter =>
+      letter.toUpperCase()
+    );
 
-    buy: "Properties for Sale",
+}
 
-    land: "Land for Sale",
 
-    commercial: "Commercial Properties"
+/* =========================================
+   FORMAT BILLING PERIOD
+   ========================================= */
 
+function formatBillingPeriod(period){
+
+  if(!period){
+    return "";
+  }
+
+  const periods = {
+    yearly: "year",
+    annual: "year",
+    annually: "year",
+    monthly: "month",
+    weekly: "week",
+    daily: "day"
   };
 
-  resultsTitle.textContent =
-    titles[type] || "Properties";
+  return periods[period.toLowerCase()]
+    || period.replaceAll("_", " ");
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+   ========================================= */
+
+function escapeHtml(value){
+
+  if(value === null || value === undefined){
+    return "";
+  }
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+function showEmptyState(message){
+
+  resultsGrid.innerHTML = `
+    <div class="marketplace-empty">
+
+      <div class="empty-icon">
+        ⌂
+      </div>
+
+      <h3>
+        No Properties Found
+      </h3>
+
+      <p>
+        ${escapeHtml(message)}
+      </p>
+
+      <a
+        href="index.html#list"
+        class="btn"
+      >
+        List a Property
+      </a>
+
+    </div>
+  `;
+
+}
+
+
+/* =========================================
+   RENDER PROPERTY CARDS
+   ========================================= */
+
+function renderProperties(properties){
+
+  if(!properties || properties.length === 0){
+
+    showEmptyState(
+      "No matching verified properties are available yet."
+    );
+
+    return;
+
+  }
+
+  resultsGrid.innerHTML =
+    properties.map(property => {
+
+      const price =
+        Number(property.price || 0)
+          .toLocaleString("en-NG");
+
+      const location = [
+        property.area,
+        property.city
+      ]
+      .filter(Boolean)
+      .map(escapeHtml)
+      .join(", ");
+
+      const image =
+        property.cover_image_url
+          ? `
+            <img
+              src="${escapeHtml(property.cover_image_url)}"
+              alt="${escapeHtml(property.title)}"
+              loading="lazy"
+            >
+          `
+          : "";
+
+      const verifiedBadge =
+        property.verification_status === "verified"
+          ? `
+            <span class="badge">
+              Verified
+            </span>
+          `
+          : "";
+
+      return `
+        <article class="result-card">
+
+          <div class="result-card-image">
+
+            ${image}
+
+            ${verifiedBadge}
+
+          </div>
+
+          <div class="result-card-body">
+
+            <div class="result-card-price">
+
+              ₦${price}
+
+              ${
+                property.billing_period
+                  ? `
+                    <span>
+                      / ${escapeHtml(
+                        formatBillingPeriod(
+                          property.billing_period
+                        )
+                      )}
+                    </span>
+                  `
+                  : ""
+              }
+
+            </div>
+
+            <h3 class="result-card-title">
+              ${escapeHtml(property.title)}
+            </h3>
+
+            <p class="result-card-location">
+              ${location || "Port Harcourt"}
+            </p>
+
+            <div class="result-card-meta">
+
+              ${
+                property.bedrooms !== null &&
+                property.bedrooms !== undefined
+                  ? `
+                    <span>
+                      ${property.bedrooms} Beds
+                    </span>
+                  `
+                  : ""
+              }
+
+              ${
+                property.bathrooms !== null &&
+                property.bathrooms !== undefined
+                  ? `
+                    <span>
+                      ${property.bathrooms} Baths
+                    </span>
+                  `
+                  : ""
+              }
+
+              ${
+                property.property_type
+                  ? `
+                    <span>
+                      ${escapeHtml(
+                        formatPropertyType(
+                          property.property_type
+                        )
+                      )}
+                    </span>
+                  `
+                  : ""
+              }
+
+            </div>
+
+          </div>
+
+        </article>
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================================
+   FILTER PROPERTIES
+   ========================================= */
+
+function filterProperties(){
+
+  let filtered =
+    [...allProperties];
+
+  const location =
+    searchLocation.value
+      .trim()
+      .toLowerCase();
+
+  const type =
+    searchType.value;
+
+  const priceRange =
+    searchPrice.value;
+
+  if(location){
+
+    filtered =
+      filtered.filter(property => {
+
+        const searchableLocation = [
+          property.area,
+          property.city,
+          property.state,
+          property.landmark
+        ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+        return searchableLocation
+          .includes(location);
+
+      });
+
+  }
+
+
+  if(type){
+
+    filtered =
+      filtered.filter(property =>
+        property.purpose === type
+      );
+
+  }
+
+
+  if(priceRange){
+
+    filtered =
+      filtered.filter(property => {
+
+        const price =
+          Number(property.price || 0);
+
+        if(priceRange === "1"){
+          return price < 2000000;
+        }
+
+        if(priceRange === "2"){
+          return price >= 2000000 &&
+                 price <= 5000000;
+        }
+
+        if(priceRange === "3"){
+          return price > 5000000 &&
+                 price <= 20000000;
+        }
+
+        if(priceRange === "4"){
+          return price > 20000000;
+        }
+
+        return true;
+
+      });
+
+  }
+
+
+  const sort =
+    sortProperties.value;
+
+  if(sort === "low"){
+
+    filtered.sort(
+      (a, b) =>
+        Number(a.price) -
+        Number(b.price)
+    );
+
+  }
+
+
+  if(sort === "high"){
+
+    filtered.sort(
+      (a, b) =>
+        Number(b.price) -
+        Number(a.price)
+    );
+
+  }
+
+
+  if(sort === "newest"){
+
+    filtered.sort(
+      (a, b) =>
+        new Date(b.created_at) -
+        new Date(a.created_at)
+    );
+
+  }
+
+
+  renderProperties(filtered);
 
 }
 
@@ -103,84 +458,102 @@ function updateResultsTitle(type){
    SEARCH
    ========================================= */
 
-searchForm.addEventListener("submit", event => {
+searchForm.addEventListener(
+  "submit",
+  event => {
 
-  event.preventDefault();
+    event.preventDefault();
 
+    const type =
+      searchType.value;
 
-  const location =
-    searchLocation.value.trim();
+    if(type){
+      updateResultsTitle(type);
+    }else{
+      resultsTitle.textContent =
+        "Properties";
+    }
 
-  const type =
-    searchType.value;
-
-  const price =
-    searchPrice.value;
-
-
-  if(type){
-
-    updateResultsTitle(type);
-
-  }else{
-
-    resultsTitle.textContent = "Properties";
+    filterProperties();
 
   }
-
-
-  showToast(
-    "Property search will be available when listings go live."
-  );
-
-});
+);
 
 
 /* =========================================
    SORT
    ========================================= */
 
-sortProperties.addEventListener("change", () => {
+sortProperties.addEventListener(
+  "change",
+  () => {
 
-  showToast(
-    "Sorting will be available when listings go live."
-  );
-
-});
-
-
-/* =========================================
-   INITIAL STATE
-   ========================================= */
-
-if(!urlType){
-
-  resultsTitle.textContent = "Properties";
+    filterProperties();
 
   }
+);
+
+
 /* =========================================
    LOAD PUBLISHED PROPERTIES FROM SUPABASE
    ========================================= */
 
 async function loadProperties(){
 
-  const { data, error } = await supabaseClient
-    .from("properties")
-    .select(`
-      id,
-      title,
-      price,
-      currency,
-      billing_period,
-      bedrooms,
-      bathrooms,
-      city,
-      area,
-      property_type,
-      purpose,
-      status
-    `)
-    .eq("status", "published");
+  resultsGrid.innerHTML = `
+    <div class="marketplace-empty">
+
+      <div class="empty-icon">
+        ⌂
+      </div>
+
+      <h3>
+        Loading Properties
+      </h3>
+
+      <p>
+        Fetching verified HouseFind listings.
+      </p>
+
+    </div>
+  `;
+
+
+  const { data, error } =
+    await supabaseClient
+      .from("properties")
+      .select(`
+        id,
+        title,
+        slug,
+        description,
+        purpose,
+        property_type,
+        status,
+        verification_status,
+        price,
+        currency,
+        billing_period,
+        bedrooms,
+        bathrooms,
+        toilets,
+        parking_spaces,
+        furnished,
+        state,
+        city,
+        area,
+        landmark,
+        cover_image_url,
+        caution_fee,
+        service_charge,
+        agency_fee,
+        created_at
+      `)
+      .eq("status", "published")
+      .order("created_at", {
+        ascending: false
+      });
+
 
   if(error){
 
@@ -189,14 +562,55 @@ async function loadProperties(){
       error
     );
 
+    showEmptyState(
+      "HouseFind could not load properties right now. Please try again shortly."
+    );
+
     return;
+
   }
 
-  console.log(
-    "HouseFind properties:",
-    data
+
+  allProperties =
+    data || [];
+
+
+  if(urlType){
+
+    const filteredByUrl =
+      allProperties.filter(
+        property =>
+          property.purpose === urlType
+      );
+
+    renderProperties(
+      filteredByUrl
+    );
+
+    return;
+
+  }
+
+
+  renderProperties(
+    allProperties
   );
 
 }
+
+
+/* =========================================
+   INITIAL PAGE STATE
+   ========================================= */
+
+if(!urlType){
+  resultsTitle.textContent =
+    "Properties";
+}
+
+
+/* =========================================
+   START
+   ========================================= */
 
 loadProperties();
