@@ -158,3 +158,45 @@ if(!urlType){
   resultsTitle.textContent = "Properties";
 
   }
+/* =========================================
+   LOAD PUBLISHED PROPERTIES FROM SUPABASE
+   ========================================= */
+
+async function loadProperties(){
+
+  const { data, error } = await supabaseClient
+    .from("properties")
+    .select(`
+      id,
+      title,
+      price,
+      currency,
+      billing_period,
+      bedrooms,
+      bathrooms,
+      city,
+      area,
+      property_type,
+      purpose,
+      status
+    `)
+    .eq("status", "published");
+
+  if(error){
+
+    console.error(
+      "Error loading properties:",
+      error
+    );
+
+    return;
+  }
+
+  console.log(
+    "HouseFind properties:",
+    data
+  );
+
+}
+
+loadProperties();
