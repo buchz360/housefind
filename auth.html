@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Account | HouseFind</title>
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+</head>
+
+
+<body class="auth-page">
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+  <div class="container nav">
+
+    <a
+      href="index.html"
+      class="logo"
+    >
+
+      <img
+        src="assets/housefind-logo.png"
+        alt="HouseFind"
+      >
+
+    </a>
+
+
+    <a
+      href="index.html"
+      class="auth-home-link"
+    >
+      Back to Home
+    </a>
+
+  </div>
+
+</header>
+
+
+
+<!-- AUTH -->
+
+<main class="auth-main">
+
+  <div class="container auth-container">
+
+
+    <!-- INTRO -->
+
+    <section class="auth-intro">
+
+      <p class="eyebrow">
+        HOUSEFIND ACCOUNT
+      </p>
+
+      <h1>
+        Your Property Journey Starts Here.
+      </h1>
+
+      <p>
+        Create your HouseFind account to access
+        property services, save listings and manage
+        your activity.
+      </p>
+
+    </section>
+
+
+
+    <!-- AUTH CARD -->
+
+    <section class="auth-card">
+
+
+      <!-- TABS -->
+
+      <div class="auth-tabs">
+
+        <button
+          id="showSignIn"
+          class="auth-tab active"
+          type="button"
+        >
+          Sign In
+        </button>
+
+
+        <button
+          id="showSignUp"
+          class="auth-tab"
+          type="button"
+        >
+          Create Account
+        </button>
+
+      </div>
+
+
+
+      <!-- MESSAGE -->
+
+      <div
+        id="authMessage"
+        class="auth-message"
+        hidden
+      ></div>
+
+
+
+      <!-- SIGN IN -->
+
+      <form
+        id="signInForm"
+        class="auth-form"
+      >
+
+        <div class="auth-field">
+
+          <label for="signInEmail">
+            Email
+          </label>
+
+          <input
+            id="signInEmail"
+            type="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            required
+          >
+
+        </div>
+
+
+        <div class="auth-field">
+
+          <label for="signInPassword">
+            Password
+          </label>
+
+          <input
+            id="signInPassword"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Enter your password"
+            required
+          >
+
+        </div>
+
+
+        <button
+          id="signInButton"
+          class="auth-submit"
+          type="submit"
+        >
+          Sign In
+        </button>
+
+      </form>
+
+
+
+      <!-- SIGN UP -->
+
+      <form
+        id="signUpForm"
+        class="auth-form"
+        hidden
+      >
+
+        <div class="auth-field">
+
+          <label for="fullName">
+            Full Name
+          </label>
+
+          <input
+            id="fullName"
+            type="text"
+            autocomplete="name"
+            placeholder="Your full name"
+            required
+          >
+
+        </div>
+
+
+        <div class="auth-field">
+
+          <label for="phone">
+            Phone Number
+          </label>
+
+          <input
+            id="phone"
+            type="tel"
+            autocomplete="tel"
+            placeholder="+234..."
+            required
+          >
+
+        </div>
+
+
+        <div class="auth-field">
+
+          <label for="signUpEmail">
+            Email
+          </label>
+
+          <input
+            id="signUpEmail"
+            type="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            required
+          >
+
+        </div>
+
+
+        <div class="auth-field">
+
+          <label for="signUpPassword">
+            Password
+          </label>
+
+          <input
+            id="signUpPassword"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Minimum 8 characters"
+            minlength="8"
+            required
+          >
+
+        </div>
+
+
+        <div class="auth-field">
+
+          <label for="confirmPassword">
+            Confirm Password
+          </label>
+
+          <input
+            id="confirmPassword"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Re-enter password"
+            minlength="8"
+            required
+          >
+
+        </div>
+
+
+        <button
+          id="signUpButton"
+          class="auth-submit"
+          type="submit"
+        >
+          Create Account
+        </button>
+
+      </form>
+
+
+
+      <!-- LOGGED IN STATE -->
+
+      <div
+        id="loggedInPanel"
+        class="logged-in-panel"
+        hidden
+      >
+
+        <div class="logged-in-icon">
+          ✓
+        </div>
+
+        <h2>
+          You're Signed In
+        </h2>
+
+        <p id="loggedInEmail"></p>
+
+
+        <a
+          href="index.html"
+          class="auth-submit auth-link-button"
+        >
+          Continue to HouseFind
+        </a>
+
+
+        <button
+          id="signOutButton"
+          class="auth-secondary"
+          type="button"
+        >
+          Sign Out
+        </button>
+
+      </div>
+
+
+      <p class="auth-note">
+        HouseFind will never ask you to share your
+        password with a property owner or agent.
+      </p>
+
+    </section>
+
+  </div>
+
+</main>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/auth.js"></script>
+
+
+</body>
+
+          </html>
