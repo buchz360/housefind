@@ -17,7 +17,7 @@ let allProperties = [];
    TOAST
    ========================================= */
 
-function showToast(message){
+function showToast(message) {
 
   toast.textContent = message;
   toast.classList.add("show");
@@ -39,7 +39,6 @@ menuBtn.addEventListener("click", () => {
   navMenu.classList.toggle("open");
 });
 
-
 document.querySelectorAll("#navMenu a").forEach(link => {
 
   link.addEventListener("click", () => {
@@ -53,7 +52,7 @@ document.querySelectorAll("#navMenu a").forEach(link => {
    RESULTS TITLE
    ========================================= */
 
-function updateResultsTitle(type){
+function updateResultsTitle(type) {
 
   const titles = {
     rent: "Homes for Rent",
@@ -69,7 +68,7 @@ function updateResultsTitle(type){
 
 
 /* =========================================
-   URL PROPERTY TYPE
+   URL TYPE
    ========================================= */
 
 const urlParams =
@@ -78,22 +77,37 @@ const urlParams =
 const urlType =
   urlParams.get("type");
 
-if(urlType){
+if (urlType) {
 
   searchType.value = urlType;
-
   updateResultsTitle(urlType);
 
 }
 
 
 /* =========================================
-   FORMAT PROPERTY TYPE
+   HELPERS
    ========================================= */
 
-function formatPropertyType(type){
+function escapeHtml(value) {
 
-  if(!type){
+  if (value === null || value === undefined) {
+    return "";
+  }
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+function formatPropertyType(type) {
+
+  if (!type) {
     return "";
   }
 
@@ -106,13 +120,9 @@ function formatPropertyType(type){
 }
 
 
-/* =========================================
-   FORMAT BILLING PERIOD
-   ========================================= */
+function formatBillingPeriod(period) {
 
-function formatBillingPeriod(period){
-
-  if(!period){
+  if (!period) {
     return "";
   }
 
@@ -132,30 +142,13 @@ function formatBillingPeriod(period){
 
 
 /* =========================================
-   ESCAPE HTML
-   ========================================= */
-
-function escapeHtml(value){
-
-  if(value === null || value === undefined){
-    return "";
-  }
-
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-
-}
-
-
-/* =========================================
    EMPTY STATE
    ========================================= */
 
-function showEmptyState(message){
+function showEmptyState(
+  title = "No Properties Found",
+  message = "No matching properties are available yet."
+) {
 
   resultsGrid.innerHTML = `
     <div class="marketplace-empty">
@@ -165,7 +158,7 @@ function showEmptyState(message){
       </div>
 
       <h3>
-        No Properties Found
+        ${escapeHtml(title)}
       </h3>
 
       <p>
@@ -186,20 +179,22 @@ function showEmptyState(message){
 
 
 /* =========================================
-   RENDER PROPERTY CARDS
+   RENDER PROPERTIES
    ========================================= */
 
-function renderProperties(properties){
+function renderProperties(properties) {
 
-  if(!properties || properties.length === 0){
+  if (!properties || properties.length === 0) {
 
     showEmptyState(
-      "No matching verified properties are available yet."
+      "Properties Are Coming Soon",
+      "We're preparing verified properties across Port Harcourt. Check back soon or be among the first to list a property."
     );
 
     return;
 
   }
+
 
   resultsGrid.innerHTML =
     properties.map(property => {
@@ -208,42 +203,25 @@ function renderProperties(properties){
         Number(property.price || 0)
           .toLocaleString("en-NG");
 
-      const location = [
-        property.area,
-        property.city
-      ]
-      .filter(Boolean)
-      .map(escapeHtml)
-      .join(", ");
 
-      const image =
-        property.cover_image_url
-          ? `
-            <img
-              src="${escapeHtml(property.cover_image_url)}"
-              alt="${escapeHtml(property.title)}"
-              loading="lazy"
-            >
-          `
-          : "";
+      const location =
+        [
+          property.area,
+          property.city
+        ]
+        .filter(Boolean)
+        .map(escapeHtml)
+        .join(", ");
 
-      const verifiedBadge =
-        property.verification_status === "verified"
-          ? `
-            <span class="badge">
-              Verified
-            </span>
-          `
-          : "";
 
       return `
         <article class="result-card">
 
           <div class="result-card-image">
 
-            ${image}
-
-            ${verifiedBadge}
+            <span class="badge">
+              Listed
+            </span>
 
           </div>
 
@@ -269,40 +247,59 @@ function renderProperties(properties){
 
             </div>
 
+
             <h3 class="result-card-title">
-              ${escapeHtml(property.title)}
+
+              ${escapeHtml(
+                property.title
+              )}
+
             </h3>
 
+
             <p class="result-card-location">
-              ${location || "Port Harcourt"}
+
+              ${
+                location ||
+                "Port Harcourt"
+              }
+
             </p>
+
 
             <div class="result-card-meta">
 
               ${
                 property.bedrooms !== null &&
                 property.bedrooms !== undefined
+
                   ? `
                     <span>
                       ${property.bedrooms} Beds
                     </span>
                   `
+
                   : ""
               }
+
 
               ${
                 property.bathrooms !== null &&
                 property.bathrooms !== undefined
+
                   ? `
                     <span>
                       ${property.bathrooms} Baths
                     </span>
                   `
+
                   : ""
               }
 
+
               ${
                 property.property_type
+
                   ? `
                     <span>
                       ${escapeHtml(
@@ -312,6 +309,7 @@ function renderProperties(properties){
                       )}
                     </span>
                   `
+
                   : ""
               }
 
@@ -331,36 +329,41 @@ function renderProperties(properties){
    FILTER PROPERTIES
    ========================================= */
 
-function filterProperties(){
+function filterProperties() {
 
   let filtered =
     [...allProperties];
+
 
   const location =
     searchLocation.value
       .trim()
       .toLowerCase();
 
+
   const type =
     searchType.value;
+
 
   const priceRange =
     searchPrice.value;
 
-  if(location){
+
+  if (location) {
 
     filtered =
       filtered.filter(property => {
 
-        const searchableLocation = [
-          property.area,
-          property.city,
-          property.state,
-          property.landmark
-        ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
+        const searchableLocation =
+          [
+            property.area,
+            property.city,
+            property.state,
+            property.landmark
+          ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
 
         return searchableLocation
           .includes(location);
@@ -370,7 +373,7 @@ function filterProperties(){
   }
 
 
-  if(type){
+  if (type) {
 
     filtered =
       filtered.filter(property =>
@@ -380,7 +383,7 @@ function filterProperties(){
   }
 
 
-  if(priceRange){
+  if (priceRange) {
 
     filtered =
       filtered.filter(property => {
@@ -388,23 +391,36 @@ function filterProperties(){
         const price =
           Number(property.price || 0);
 
-        if(priceRange === "1"){
+
+        if (priceRange === "1") {
           return price < 2000000;
         }
 
-        if(priceRange === "2"){
-          return price >= 2000000 &&
-                 price <= 5000000;
+
+        if (priceRange === "2") {
+
+          return (
+            price >= 2000000 &&
+            price <= 5000000
+          );
+
         }
 
-        if(priceRange === "3"){
-          return price > 5000000 &&
-                 price <= 20000000;
+
+        if (priceRange === "3") {
+
+          return (
+            price > 5000000 &&
+            price <= 20000000
+          );
+
         }
 
-        if(priceRange === "4"){
+
+        if (priceRange === "4") {
           return price > 20000000;
         }
+
 
         return true;
 
@@ -416,7 +432,8 @@ function filterProperties(){
   const sort =
     sortProperties.value;
 
-  if(sort === "low"){
+
+  if (sort === "low") {
 
     filtered.sort(
       (a, b) =>
@@ -427,7 +444,7 @@ function filterProperties(){
   }
 
 
-  if(sort === "high"){
+  if (sort === "high") {
 
     filtered.sort(
       (a, b) =>
@@ -438,7 +455,7 @@ function filterProperties(){
   }
 
 
-  if(sort === "newest"){
+  if (sort === "newest") {
 
     filtered.sort(
       (a, b) =>
@@ -467,11 +484,15 @@ searchForm.addEventListener(
     const type =
       searchType.value;
 
-    if(type){
+    if (type) {
+
       updateResultsTitle(type);
-    }else{
+
+    } else {
+
       resultsTitle.textContent =
         "Properties";
+
     }
 
     filterProperties();
@@ -495,10 +516,10 @@ sortProperties.addEventListener(
 
 
 /* =========================================
-   LOAD PUBLISHED PROPERTIES FROM SUPABASE
+   LOAD FROM SUPABASE
    ========================================= */
 
-async function loadProperties(){
+async function loadProperties() {
 
   resultsGrid.innerHTML = `
     <div class="marketplace-empty">
@@ -512,7 +533,7 @@ async function loadProperties(){
       </h3>
 
       <p>
-        Fetching verified HouseFind listings.
+        Connecting to the HouseFind marketplace.
       </p>
 
     </div>
@@ -525,45 +546,41 @@ async function loadProperties(){
       .select(`
         id,
         title,
-        slug,
         description,
         purpose,
         property_type,
         status,
-        verification_status,
         price,
         currency,
         billing_period,
         bedrooms,
         bathrooms,
-        toilets,
-        parking_spaces,
-        furnished,
         state,
         city,
         area,
         landmark,
-        cover_image_url,
-        caution_fee,
-        service_charge,
-        agency_fee,
         created_at
       `)
       .eq("status", "published")
-      .order("created_at", {
-        ascending: false
-      });
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
 
 
-  if(error){
+  if (error) {
 
     console.error(
-      "Error loading properties:",
+      "HOUSEFIND SUPABASE ERROR:",
       error
     );
 
+
     showEmptyState(
-      "HouseFind could not load properties right now. Please try again shortly."
+      "Unable to Load Properties",
+      "HouseFind could not connect to the property listings. Please try again shortly."
     );
 
     return;
@@ -575,7 +592,7 @@ async function loadProperties(){
     data || [];
 
 
-  if(urlType){
+  if (urlType) {
 
     const filteredByUrl =
       allProperties.filter(
@@ -587,25 +604,26 @@ async function loadProperties(){
       filteredByUrl
     );
 
-    return;
+  } else {
+
+    renderProperties(
+      allProperties
+    );
 
   }
-
-
-  renderProperties(
-    allProperties
-  );
 
 }
 
 
 /* =========================================
-   INITIAL PAGE STATE
+   INITIAL STATE
    ========================================= */
 
-if(!urlType){
+if (!urlType) {
+
   resultsTitle.textContent =
     "Properties";
+
 }
 
 
