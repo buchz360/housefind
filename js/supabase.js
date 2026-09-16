@@ -8,3 +8,4 @@ const supabaseClient = supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLIC_KEY
 );
+console.log("Supabase connected:", supabaseClient);
